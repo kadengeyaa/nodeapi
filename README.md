@@ -57,3 +57,14 @@ yarn add --dev husky lint-staged ts-node
 Add jest.config.js, .lintstagedrc, nodemon.json files
 
 Make changes to package.json scripts and hooks
+
+# ENVIRONMENT
+
+Add .env file
+
+```
+PORT=?
+MONGO_DB_URI=?
+JWT_SECRET=?
+LOG_LEVEL=?
+```
