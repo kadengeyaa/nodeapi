@@ -24,6 +24,18 @@ function logProperty(target: any, key: string): void {
   });
 }
 
+function logFunction(_target: any, key: string, value: any): any {
+  return {
+    value: function(...args: any[]): any {
+      const a = args.map(a => JSON.stringify(a)).join();
+      const result = value.value.apply(this, args);
+      const r = JSON.stringify(result);
+      console.log(`Call: ${key}(${a}) => ${r}`);
+      return result;
+    },
+  };
+}
+
 class Person {
   @logProperty
   public name: string;
@@ -33,6 +45,11 @@ class Person {
     this.name = name;
     this.surname = surname;
   }
+
+  @logFunction
+  duplicateAge(age: number): number {
+    return age * 2;
+  }
 }
 
 const me = new Person('Kadenge', 'Yaa');
@@ -40,3 +57,5 @@ const me = new Person('Kadenge', 'Yaa');
 me.name = 'Jeff';
 
 me.name;
+
+me.duplicateAge(2);
