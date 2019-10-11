@@ -43,6 +43,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13"
   }
