@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import http from 'http';
 import { SERVER_PORT } from './config';
-import { logger } from './loader';
+import { logger, load } from './loader';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error('UNCAUGHT_EXCEPTION: %o', error);
@@ -17,6 +17,8 @@ process.on('unhandledRejection', (reason: {} | null | undefined, promise: Promis
 
 async function startServer(): Promise<void> {
   const app = express();
+
+  await load(app);
 
   const server = http.createServer(app);
 
