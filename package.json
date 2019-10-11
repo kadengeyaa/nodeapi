@@ -1,0 +1,10 @@
+{
+  "name": "node_api",
+  "version": "1.0.0",
+  "description": "Base project for node api server",
+  "main": "src/app",
+  "repository": "https://kadengeyaa@bitbucket.org/44team/node_api.git",
+  "author": "kadengeyaa <kadengeyaa@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
