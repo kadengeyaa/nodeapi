@@ -15,7 +15,7 @@ process.on('unhandledRejection', (reason: {} | null | undefined, promise: Promis
   logger.error('UNHANDLED_REJECTION: Promise: %o', promise);
 });
 
-async function startServer(): Promise<void> {
+async function serve(): Promise<void> {
   const app = express();
 
   await load(app);
@@ -33,4 +33,4 @@ async function startServer(): Promise<void> {
   });
 }
 
-startServer();
+serve();
