@@ -2,16 +2,17 @@ import 'reflect-metadata';
 import express from 'express';
 import http from 'http';
 import { SERVER_PORT } from './config';
+import { logger } from './loader';
 
 process.on('uncaughtException', (error: Error) => {
-  console.log('uncaughtException', error);
+  logger.error('UNCAUGHT_EXCEPTION: %o', error);
 
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason: {} | null | undefined, promise: Promise<any>) => {
-  console.log('unhandledRejection: Reason', reason);
-  console.log('unhandledRejection: Promise', promise);
+  logger.error('UNHANDLED_REJECTION: Reason: %o', reason);
+  logger.error('UNHANDLED_REJECTION: Promise: %o', promise);
 });
 
 async function startServer(): Promise<void> {
@@ -20,13 +21,13 @@ async function startServer(): Promise<void> {
   const server = http.createServer(app);
 
   server.on('error', error => {
-    console.log('SERVER_ERROR', error);
+    logger.error('SERVER_ERROR: %o', error);
 
     throw error;
   });
 
   server.listen(SERVER_PORT, () => {
-    console.log('SERVER_STARTED', server.address());
+    logger.info('SERVER_STARTED: %o', server.address());
   });
 }
 

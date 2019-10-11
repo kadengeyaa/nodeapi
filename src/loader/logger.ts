@@ -1,7 +1,9 @@
 import winston from 'winston';
 import { NODE_ENV, LOG_LEVEL } from '../config';
+import TransportStream from 'winston-transport';
 
-const transports = [];
+const transports = new Array<TransportStream>();
+
 if (NODE_ENV !== 'development') {
   transports.push(new winston.transports.Console());
 } else {
