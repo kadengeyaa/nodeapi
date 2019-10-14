@@ -2,7 +2,7 @@ import { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
-import { LOG_LEVEL, NODE_ENV } from '../config';
+import { NODE_ENV } from '../config';
 
 export function initApp(app: Application): void {
   app.get('/status', (req, res) => {
