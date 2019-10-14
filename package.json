@@ -48,6 +48,7 @@
     "express": "^4.17.1",
     "morgan-body": "^2.4.8",
     "reflect-metadata": "^0.1.13",
+    "serialize-error": "^5.0.0",
     "winston": "^3.2.1"
   }
 }
