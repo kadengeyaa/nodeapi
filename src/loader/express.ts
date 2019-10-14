@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config';
+import { router } from '../api/route';
 
 export function initApp(app: Application): void {
   app.get('/status', (req, res) => {
@@ -20,6 +21,8 @@ export function initApp(app: Application): void {
   app.use(bodyParser.urlencoded({ extended: false }));
 
   morganBody(app);
+
+  app.use('/', router());
 
   app.use((req, res, next) => {
     const error: DefaultError = new Error('URL not found');
