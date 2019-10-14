@@ -46,6 +46,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "mongoose": "^5.7.4",
     "morgan-body": "^2.4.8",
     "reflect-metadata": "^0.1.13",
     "serialize-error": "^5.0.0",
