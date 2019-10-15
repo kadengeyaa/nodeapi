@@ -2,7 +2,7 @@ import { celebrate, Joi } from 'celebrate';
 import { RequestHandler, Request, Response, NextFunction } from 'express';
 import { NAME_REGEX, USERNAME_REGEX, PASSWORD_REGEX } from '../../../../model';
 
-export function verify(): RequestHandler {
+export function confirmSignUpBody(): RequestHandler {
   return celebrate({
     body: Joi.object({
       firstName: Joi.string().regex(NAME_REGEX),
@@ -15,6 +15,7 @@ export function verify(): RequestHandler {
 
 export async function signUp(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
+    res.json({});
   } catch (error) {
     next(error);
   }
