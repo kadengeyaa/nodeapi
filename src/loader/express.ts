@@ -4,6 +4,7 @@ import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config/server';
 import { router } from '../api/route';
+import { errors } from 'celebrate';
 
 export function initApp(app: Application): void {
   app.get('/status', (req, res) => {
@@ -32,6 +33,8 @@ export function initApp(app: Application): void {
 
     next(error);
   });
+
+  app.use(errors());
 
   app.use((error: DefaultError, req: Request, res: Response, next: NextFunction) => {
     const serializedError: ErrorObject & {
