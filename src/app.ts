@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express from 'express';
 import http from 'http';
 import { SERVER_PORT } from './config';
