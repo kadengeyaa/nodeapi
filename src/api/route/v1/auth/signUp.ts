@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Joi } from 'celebrate';
 import { NAME_REGEX, USERNAME_REGEX, PASSWORD_REGEX } from '../../../../model';
+import { container } from '../../../../loader/inversify';
+import { AuthService } from '../../../../service/auth';
 
 export function signUpRouter(): Router {
   const router = Router();
@@ -23,9 +25,11 @@ export function signUpRouter(): Router {
           .regex(PASSWORD_REGEX),
       }),
     }),
-    (req, res, next) => {
+    async (req, res, next) => {
       try {
-        res.json({});
+        const user = await container.get<AuthService>(AuthService).signUp(req.body as UserSignUp);
+
+        res.json({ user });
       } catch (error) {
         next(error);
       }

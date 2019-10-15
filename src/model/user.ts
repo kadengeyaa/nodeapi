@@ -38,13 +38,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    unique: true,
-    lowercase: true,
-  },
-  salt: {
-    type: String,
-    unique: true,
-    lowercase: true,
+    required: true,
   },
 });
 

@@ -24,7 +24,6 @@ type User = {
   lastName: string;
   username: string;
   password: string;
-  salt: string;
 };
 
 type UserSignUp = {

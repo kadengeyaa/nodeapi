@@ -2,7 +2,7 @@ import { Application } from 'express';
 import { initApp } from './express';
 import { initDb } from './mongoose';
 import { logger } from './logger';
-import { initInjection as initDI } from './inversify';
+import { initDI } from './inversify';
 
 export * from './logger';
 
