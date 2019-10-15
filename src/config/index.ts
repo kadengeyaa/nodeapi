@@ -6,3 +6,4 @@ if (!config) throw new Error('Could not find .env file');
 
 export * from './server';
 export * from './logger';
+export * from './mongoose';

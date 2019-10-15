@@ -3,6 +3,7 @@
     "target": "es5",
     "lib": ["es5", "esnext.asynciterable"],
     "typeRoots": ["./node_modules/@types", "src/types"],
+    "types": ["reflect-metadata"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
