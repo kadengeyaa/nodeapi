@@ -1,6 +1,21 @@
+type joi = {
+  name: string;
+  message: string;
+  stack: string;
+};
+
+type meta = {
+  source: string;
+};
+
 type DefaultError = Error & {
+  name?: string;
+  stack?: string;
   code?: string;
   status?: number;
+} & {
+  joi?: joi;
+  meta?: meta;
 };
 
 type User = {

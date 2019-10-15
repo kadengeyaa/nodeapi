@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { confirmSignUpBody, signUp } from './signUp';
+import { signUpRouter } from './signUp';
 
 export function authRouter(): Router {
   const router = Router();
 
-  router.post('signup', confirmSignUpBody, signUp);
+  router.use('/signup', signUpRouter());
 
   return router;
 }
