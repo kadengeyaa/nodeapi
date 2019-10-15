@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { AuthService } from '../service';
+import { AuthService } from '../service/auth';
 
 const _container = new Container();
 

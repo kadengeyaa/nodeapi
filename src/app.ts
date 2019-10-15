@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import './config';
 import express from 'express';
 import http from 'http';
-import { SERVER_PORT } from './config';
 import { logger, load } from './loader';
+import { SERVER_PORT } from './config/server';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error('UNCAUGHT_EXCEPTION: %o', error);

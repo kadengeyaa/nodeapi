@@ -24,6 +24,7 @@ const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
+    required: true,
     lowercase: true,
     validate: {
       validator: isUsername,

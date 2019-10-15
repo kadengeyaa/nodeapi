@@ -1,6 +1,7 @@
 import winston from 'winston';
-import { NODE_ENV, LOG_LEVEL } from '../config';
 import TransportStream from 'winston-transport';
+import { LOG_LEVEL } from '../config/logger';
+import { NODE_ENV } from '../config/server';
 
 const transports = new Array<TransportStream>();
 
