@@ -1,8 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
 
-const isName = (name: string): boolean => !!name.match(/^[^\W\d_]+$/);
+export const NAME_REGEX = /^[^\W\d_]{2,32}$/;
 
-const isUsername = (username: string): boolean => !!username.match(/^[\w]+$/);
+export const USERNAME_REGEX = /^[\w]{2,32}$/;
+
+export const PASSWORD_REGEX = /^[^\s]{8,32}$/;
+
+const isName = (name: string): boolean => !!name.match(NAME_REGEX);
+
+const isUsername = (username: string): boolean => !!username.match(USERNAME_REGEX);
 
 const userSchema = new Schema({
   firstName: {
