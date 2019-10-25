@@ -1,10 +1,13 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import argon2 from 'argon2';
 import { UserModel } from '../model';
-import { userEventEmitter } from '../event';
+import { UserEventEmitter } from '../event';
 
 @injectable()
 export class AuthService {
+  @inject(UserEventEmitter)
+  private userEventEmitter: UserEventEmitter;
+
   async signUp(userSignUp: UserSignUp): Promise<User> {
     const { username, firstName, lastName, password } = userSignUp;
 
@@ -25,7 +28,7 @@ export class AuthService {
 
     delete user.password;
 
-    userEventEmitter.emit('sign_up', user);
+    this.userEventEmitter.emit('sign_up', user);
 
     return user;
   }
@@ -45,7 +48,7 @@ export class AuthService {
 
     delete user.password;
 
-    userEventEmitter.emit('sign_in', user);
+    this.userEventEmitter.emit('sign_in', user);
 
     return user;
   }
