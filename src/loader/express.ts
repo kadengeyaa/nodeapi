@@ -2,8 +2,9 @@ import { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
-import { NODE_ENV } from '../config';
+import { NODE_ENV } from '../config/server';
 import { router } from '../api/route';
+import { isCelebrate } from 'celebrate';
 
 export function initApp(app: Application): void {
   app.get('/status', (req, res) => {
@@ -34,11 +35,21 @@ export function initApp(app: Application): void {
   });
 
   app.use((error: DefaultError, req: Request, res: Response, next: NextFunction) => {
+    if (isCelebrate(error)) {
+      error.name = error.joi.name;
+      error.message = error.joi.message;
+      error.stack = error.joi.stack;
+
+      delete error.joi;
+      delete error.meta;
+    }
+
     const serializedError: ErrorObject & {
       status?: number;
     } = serializeError(error);
 
     serializedError.code = serializedError.code || '500';
+
     serializedError.status = error.status || 500;
 
     if (NODE_ENV !== 'development') delete serializedError.stack;
