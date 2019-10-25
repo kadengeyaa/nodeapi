@@ -1,9 +1,9 @@
 {
   "name": "node_api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Base project for node api server",
   "main": "src/app.ts",
-  "repository": "https://kadengeyaa@bitbucket.org/44team/node_api.git",
+  "repository": "git@github.com:kadengeyaa/nodeapi.git",
   "author": "kadengeyaa <kadengeyaa@gmail.com>",
   "license": "MIT",
   "private": true,
