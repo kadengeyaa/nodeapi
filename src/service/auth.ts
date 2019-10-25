@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import argon2 from 'argon2';
 import { UserModel } from '../model';
+import { userEventEmitter } from '../event';
 
 @injectable()
 export class AuthService {
@@ -24,6 +25,8 @@ export class AuthService {
 
     delete user.password;
 
+    userEventEmitter.emit('sign_up', user);
+
     return user;
   }
 
@@ -41,6 +44,8 @@ export class AuthService {
     user = user.toObject();
 
     delete user.password;
+
+    userEventEmitter.emit('sign_in', user);
 
     return user;
   }
