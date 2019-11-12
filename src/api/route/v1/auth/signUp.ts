@@ -27,7 +27,7 @@ export function signUpRouter(): Router {
     }),
     async (req, res, next) => {
       try {
-        const user = await container.get<AuthService>(AuthService).signUp(req.body as UserSignUp);
+        const user = await container.get(AuthService).signUp(req.body as UserSignUp);
 
         res.json({ user });
       } catch (error) {
