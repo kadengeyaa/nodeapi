@@ -17,7 +17,11 @@ export function signInRouter(): Router {
     }),
     async (req, res, next) => {
       try {
-        const user = await container.get(AuthService).signIn(req.body as UserSignIn);
+        const authService = container.get(AuthService);
+
+        const user = await authService.signIn(req.body as UserSignIn);
+
+        res.set('Authorization', `Bearer ${authService.getToken(user)}`);
 
         res.json({ user });
       } catch (error) {
