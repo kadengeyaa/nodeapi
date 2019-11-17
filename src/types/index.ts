@@ -16,6 +16,10 @@ type DefaultError = Error & {
 } & {
   joi?: joi;
   meta?: meta;
+} & {
+  inner?: {
+    message?: string;
+  };
 };
 
 type User = {
