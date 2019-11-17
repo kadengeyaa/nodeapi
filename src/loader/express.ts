@@ -42,6 +42,10 @@ export function initApp(app: Application): void {
 
       delete error.joi;
       delete error.meta;
+    } else if (error.name === 'UnauthorizedError') {
+      error.code = '401';
+
+      delete error.inner;
     }
 
     const serializedError: ErrorObject & {
@@ -50,7 +54,7 @@ export function initApp(app: Application): void {
 
     serializedError.code = serializedError.code || '500';
 
-    serializedError.status = error.status || 500;
+    delete serializedError.status;
 
     if (NODE_ENV !== 'development') delete serializedError.stack;
 

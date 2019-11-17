@@ -16,7 +16,13 @@ type DefaultError = Error & {
 } & {
   joi?: joi;
   meta?: meta;
+} & {
+  inner?: {
+    message?: string;
+  };
 };
+
+type Role = 'user';
 
 type User = {
   _id: string;
@@ -24,6 +30,7 @@ type User = {
   lastName: string;
   username: string;
   password: string;
+  role?: Role;
 };
 
 type UserSignUp = {
@@ -36,4 +43,14 @@ type UserSignUp = {
 type UserSignIn = {
   username: string;
   password: string;
+};
+
+type RequestParamsDictionary = {
+  user?: {
+    _id: string;
+    role?: Role;
+  };
+  token?: {
+    _id: string;
+  };
 };

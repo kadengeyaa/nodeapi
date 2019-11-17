@@ -2,6 +2,8 @@ import { injectable, inject } from 'inversify';
 import argon2 from 'argon2';
 import { UserModel } from '../model';
 import { UserEventEmitter } from '../event';
+import { JWT_SECRET } from '../config/jwt';
+import { sign } from 'jsonwebtoken';
 
 @injectable()
 export class AuthService {
@@ -24,19 +26,15 @@ export class AuthService {
       password: hash,
     }).save();
 
-    user = user.toObject();
-
-    delete user.password;
-
     this.userEventEmitter.emit('sign_up', user);
 
-    return user;
+    return user.toJSON();
   }
 
   async signIn(userSignIn: UserSignIn): Promise<User> {
     const { username, password } = userSignIn;
 
-    let user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ username });
 
     if (!user) throw new Error('User not registered');
 
@@ -44,12 +42,12 @@ export class AuthService {
 
     if (!correct) throw new Error('Password incorrect');
 
-    user = user.toObject();
-
-    delete user.password;
-
     this.userEventEmitter.emit('sign_in', user);
 
-    return user;
+    return user.toJSON();
+  }
+
+  getToken(payload: User): string {
+    return sign(payload, JWT_SECRET, { expiresIn: '10m' });
   }
 }
