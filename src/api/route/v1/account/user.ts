@@ -4,12 +4,16 @@ import Joi = require('@hapi/joi');
 import { NAME_REGEX, USERNAME_REGEX } from '../../../../model';
 import { container } from '../../../../loader/inversify';
 import { UserService } from '../../../../service/user';
+import { attachToken } from '../../../middleware/token';
+import { attachUser } from '../../../middleware/user';
 
 export function userRouter(): Router {
   const router = Router();
 
   router.put(
     '/',
+    attachToken,
+    attachUser,
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),

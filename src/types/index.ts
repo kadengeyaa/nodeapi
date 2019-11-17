@@ -37,3 +37,12 @@ type UserSignIn = {
   username: string;
   password: string;
 };
+
+type RequestParamsDictionary = {
+  user?: {
+    _id: string;
+  };
+  token?: {
+    _id: string;
+  };
+};
