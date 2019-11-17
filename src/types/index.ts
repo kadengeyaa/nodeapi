@@ -22,12 +22,15 @@ type DefaultError = Error & {
   };
 };
 
+type Role = 'user';
+
 type User = {
   _id: string;
   firstName: string;
   lastName: string;
   username: string;
   password: string;
+  role?: Role;
 };
 
 type UserSignUp = {
@@ -45,6 +48,7 @@ type UserSignIn = {
 type RequestParamsDictionary = {
   user?: {
     _id: string;
+    role?: Role;
   };
   token?: {
     _id: string;

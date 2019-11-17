@@ -46,7 +46,6 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "accesscontrol": "^2.2.1",
     "argon2": "^0.25.1",
     "body-parser": "^1.19.0",
     "celebrate": "^10.1.0",
@@ -59,6 +58,7 @@
     "mongoose": "^5.7.11",
     "morgan-body": "^2.4.8",
     "reflect-metadata": "^0.1.13",
+    "role-acl": "^4.1.2",
     "serialize-error": "^5.0.0",
     "winston": "^3.2.1"
   }

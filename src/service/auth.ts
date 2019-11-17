@@ -48,6 +48,6 @@ export class AuthService {
   }
 
   getToken(payload: User): string {
-    return sign(payload, JWT_SECRET, { expiresIn: '10s' });
+    return sign(payload, JWT_SECRET, { expiresIn: '10m' });
   }
 }

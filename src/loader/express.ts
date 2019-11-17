@@ -45,7 +45,6 @@ export function initApp(app: Application): void {
     } else if (error.name === 'UnauthorizedError') {
       error.code = '401';
 
-      delete error.stack;
       delete error.inner;
     }
 

@@ -4,9 +4,11 @@ import { UserService } from '../../service/user';
 
 export const attachUser: RequestHandler = async (req, res, next) => {
   try {
-    (req as RequestParamsDictionary).user = await container
-      .get(UserService)
-      .findById((req as RequestParamsDictionary).token._id);
+    const user: User = await container.get(UserService).findById((req as RequestParamsDictionary).token._id);
+
+    user.role = 'user';
+
+    (req as RequestParamsDictionary).user = user;
 
     next();
   } catch (error) {
