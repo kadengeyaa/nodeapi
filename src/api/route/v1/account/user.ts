@@ -4,12 +4,17 @@ import Joi = require('@hapi/joi');
 import { NAME_REGEX, USERNAME_REGEX } from '../../../../model';
 import { container } from '../../../../loader/inversify';
 import { UserService } from '../../../../service/user';
+import { attachToken } from '../../../middleware/token';
+import { attachUser } from '../../../middleware/user';
+import { AccessControlService } from '../../../../service/access';
 
 export function userRouter(): Router {
   const router = Router();
 
   router.put(
     '/',
+    attachToken,
+    attachUser,
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),
@@ -18,6 +23,21 @@ export function userRouter(): Router {
         username: Joi.string().regex(USERNAME_REGEX),
       }),
     }),
+    async (req, res, next) => {
+      try {
+        const permission = await container
+          .get(AccessControlService)
+          .can((req as RequestParamsDictionary).user.role)
+          .execute('update')
+          .on('profile');
+
+        if (!permission.granted) throw Error('Permission declined');
+
+        next();
+      } catch (error) {
+        next(error);
+      }
+    },
     async (req, res, next) => {
       try {
         const { id, firstName, lastName, username } = req.body;
