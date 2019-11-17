@@ -24,10 +24,6 @@ export class AuthService {
       password: hash,
     }).save();
 
-    user = user.toObject();
-
-    delete user.password;
-
     this.userEventEmitter.emit('sign_up', user);
 
     return user;
@@ -36,17 +32,13 @@ export class AuthService {
   async signIn(userSignIn: UserSignIn): Promise<User> {
     const { username, password } = userSignIn;
 
-    let user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ username });
 
     if (!user) throw new Error('User not registered');
 
     const correct = await argon2.verify(user.password, password);
 
     if (!correct) throw new Error('Password incorrect');
-
-    user = user.toObject();
-
-    delete user.password;
 
     this.userEventEmitter.emit('sign_in', user);
 
