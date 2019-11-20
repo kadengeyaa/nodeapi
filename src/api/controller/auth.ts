@@ -1,12 +1,12 @@
 import { inject } from 'inversify';
-import { controller, httpPost } from 'inversify-express-utils';
+import { controller, httpPost, BaseHttpController } from 'inversify-express-utils';
 import { celebrate, Joi } from 'celebrate';
 import { AuthService } from '../../service/auth';
 import { NAME_REGEX, USERNAME_REGEX, PASSWORD_REGEX } from '../../model/user';
 import { Response, Request } from 'express';
 
 @controller('/v1/auth')
-export class AuthController {
+export class AuthController extends BaseHttpController {
   @inject(AuthService)
   private authService: AuthService;
 
@@ -22,7 +22,7 @@ export class AuthController {
   async signIn(req: Request, res: Response): Promise<void> {
     const user = await this.authService.signIn(req.body as UserSignIn);
 
-    res.set('Authorization', `Bearer ${this.authService.getToken(user)}`);
+    res.set('Authorization', `Bearer ${this.authService.encode(user)}`);
 
     res.json({ user });
   }
@@ -49,7 +49,7 @@ export class AuthController {
   async signUp(req: Request, res: Response): Promise<void> {
     const user = await this.authService.signUp(req.body as UserSignUp);
 
-    res.set('Authorization', `Bearer ${this.authService.getToken(user)}`);
+    res.set('Authorization', `Bearer ${this.authService.encode(user)}`);
 
     res.json({ user });
   }

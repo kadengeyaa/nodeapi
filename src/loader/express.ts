@@ -4,8 +4,6 @@ import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config/server';
 import { isCelebrate } from 'celebrate';
-import { JWT_SECRET } from '../config/jwt';
-import jwt from 'express-jwt';
 
 export function configExpress(app: Application): void {
   app.enable('trust proxy');
@@ -13,14 +11,6 @@ export function configExpress(app: Application): void {
   app.use(bodyParser.json());
 
   app.use(bodyParser.urlencoded({ extended: false }));
-
-  app.use(
-    jwt({
-      secret: JWT_SECRET,
-      requestProperty: 'token',
-      credentialsRequired: false,
-    }),
-  );
 
   morganBody(app);
 }
@@ -45,10 +35,6 @@ export function configExpressError(app: Application): void {
 
       delete error.joi;
       delete error.meta;
-    } else if (error.name === 'UnauthorizedError') {
-      error.code = '401';
-
-      delete error.inner;
     }
 
     const serializedError: ErrorObject & {

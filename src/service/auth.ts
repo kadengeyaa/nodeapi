@@ -3,7 +3,7 @@ import argon2 from 'argon2';
 import { UserModel } from '../model';
 import { UserEventEmitter } from '../event';
 import { JWT_SECRET } from '../config/jwt';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 @injectable()
 export class AuthService {
@@ -47,7 +47,11 @@ export class AuthService {
     return user.toJSON();
   }
 
-  getToken(payload: User): string {
+  encode(payload: User): string {
     return sign(payload, JWT_SECRET, { expiresIn: '10m' });
+  }
+
+  async decode(token: string): Promise<User> {
+    return (await verify(token, JWT_SECRET)) as User;
   }
 }

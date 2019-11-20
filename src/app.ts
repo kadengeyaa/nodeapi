@@ -9,6 +9,7 @@ import { initDb } from './loader/mongoose';
 import { getContainer } from './loader/inversify';
 import { logger } from './loader/logger';
 import { render } from 'prettyjson';
+import { AuthProvider } from './api/provider/auth';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error('UNCAUGHT_EXCEPTION: %o', error);
@@ -28,7 +29,7 @@ async function serve(): Promise<void> {
 
   const container = getContainer();
 
-  const app = new InversifyExpressServer(container).setConfig(configExpress).build();
+  const app = new InversifyExpressServer(container, null, null, null, AuthProvider).setConfig(configExpress).build();
 
   configExpressNotFoundError(app);
 
