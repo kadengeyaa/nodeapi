@@ -3,6 +3,8 @@ import { AuthService } from '../service/auth';
 import { UserEventEmitter } from '../event';
 import { UserService } from '../service/user';
 import { AccessControlService, AccessInfoService } from '../service/access';
+import { UserController } from '../api/controller/user';
+import { AuthController } from '../api/controller/auth';
 
 const _container = new Container();
 
@@ -12,6 +14,8 @@ export function initDI(): void {
   _container.bind<UserService>(UserService).to(UserService);
   _container.bind<AccessInfoService>(AccessInfoService).to(AccessInfoService);
   _container.bind<AccessControlService>(AccessControlService).to(AccessControlService);
+  _container.bind<UserController>(UserController).to(UserController);
+  _container.bind<AuthController>(AuthController).to(AuthController);
 }
 
 export const container = _container;

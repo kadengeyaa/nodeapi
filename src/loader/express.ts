@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config/server';
-import { router } from '../api/route';
+import { router } from '../api/router/app';
 import { isCelebrate } from 'celebrate';
 
 export function initApp(app: Application): void {
