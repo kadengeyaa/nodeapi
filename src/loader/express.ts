@@ -3,28 +3,29 @@ import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config/server';
-import { router } from '../api/router/app';
 import { isCelebrate } from 'celebrate';
+import { JWT_SECRET } from '../config/jwt';
+import jwt from 'express-jwt';
 
-export function initApp(app: Application): void {
-  app.get('/status', (req, res) => {
-    res.status(200).end();
-  });
-
-  app.head('/status', (req, res) => {
-    res.status(200).end();
-  });
-
+export function configExpress(app: Application): void {
   app.enable('trust proxy');
 
   app.use(bodyParser.json());
 
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  app.use(
+    jwt({
+      secret: JWT_SECRET,
+      requestProperty: 'token',
+      credentialsRequired: false,
+    }),
+  );
+
   morganBody(app);
+}
 
-  app.use('/', router());
-
+export function configExpressNotFoundError(app: Application): void {
   app.use((req, res, next) => {
     const error: DefaultError = new Error('URL not found');
 
@@ -33,7 +34,9 @@ export function initApp(app: Application): void {
 
     next(error);
   });
+}
 
+export function configExpressError(app: Application): void {
   app.use((error: DefaultError, req: Request, res: Response, next: NextFunction) => {
     if (isCelebrate(error)) {
       error.name = error.joi.name;

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
-import { logger } from '../loader';
 import { injectable, decorate } from 'inversify';
+import { logger } from '../loader/logger';
 
 decorate(injectable(), EventEmitter);
 
