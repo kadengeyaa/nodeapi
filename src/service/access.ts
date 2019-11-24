@@ -6,7 +6,7 @@ decorate(injectable(), AccessControl);
 @injectable()
 export class AccessInfoService {
   getGrants(): IAccessInfo[] {
-    return [{ role: 'user', resource: 'profile', action: 'update' }];
+    return [{ role: 'user', resource: 'user', action: 'update' }];
   }
 }
 

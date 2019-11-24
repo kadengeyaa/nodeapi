@@ -4,23 +4,25 @@ import { UserService } from '../../service/user';
 import { interfaces } from 'inversify-express-utils';
 import { AuthService } from '../../service/auth';
 
-class Principal implements interfaces.Principal {
+export class Principal implements interfaces.Principal {
   public details: User;
 
   constructor(details: User) {
     this.details = details;
   }
 
-  isAuthenticated(): Promise<boolean> {
-    return Promise.resolve(!!this.details);
+  async isAuthenticated(): Promise<boolean> {
+    return !!this.details;
   }
 
-  isResourceOwner(resource: string): Promise<boolean> {
-    return Promise.resolve(resource === '1');
+  async isResourceOwner(resource: { type: 'user'; id: string }): Promise<boolean> {
+    if (this.details && resource.type === 'user') return resource.id === this.details._id;
+
+    return false;
   }
 
-  isInRole(role: string): Promise<boolean> {
-    return Promise.resolve(role === 'user');
+  async isInRole(role: 'user'): Promise<boolean> {
+    return !!this.details && role === 'user';
   }
 }
 

@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   encode(payload: User): string {
-    return sign(payload, JWT_SECRET, { expiresIn: '10m' });
+    return sign(payload, JWT_SECRET, { expiresIn: '7d' });
   }
 
   async decode(token: string): Promise<User> {
