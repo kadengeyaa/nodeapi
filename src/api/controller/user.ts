@@ -5,7 +5,6 @@ import { celebrate, Joi } from 'celebrate';
 import { NAME_REGEX, USERNAME_REGEX } from '../../model/user';
 import { httpPut, controller, BaseHttpController } from 'inversify-express-utils';
 import { AuthMiddleware } from '../middleware/auth';
-import { logger } from '../../loader/logger';
 
 @controller('/v1/account', AuthMiddleware)
 export class UserController extends BaseHttpController {
@@ -16,7 +15,7 @@ export class UserController extends BaseHttpController {
     '/user',
     celebrate({
       body: Joi.object({
-        id: Joi.string().required(),
+        userId: Joi.string().required(),
         firstName: Joi.string().regex(NAME_REGEX),
         lastName: Joi.string().regex(NAME_REGEX),
         username: Joi.string().regex(USERNAME_REGEX),
@@ -24,11 +23,9 @@ export class UserController extends BaseHttpController {
     }),
   )
   async update(req: Request, res: Response): Promise<void> {
-    const { id, firstName, lastName, username } = req.body;
+    const { userId, firstName, lastName, username } = req.body;
 
-    logger.info('USER %o', this.httpContext.user);
-
-    const user = await this.userService.update(id, { firstName, lastName, username });
+    const user = await this.userService.update(userId, { firstName, lastName, username });
 
     res.json({ user });
   }

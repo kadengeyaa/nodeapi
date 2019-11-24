@@ -12,7 +12,7 @@ class Principal implements interfaces.Principal {
   }
 
   isAuthenticated(): Promise<boolean> {
-    return Promise.resolve(true);
+    return Promise.resolve(!!this.details);
   }
 
   isResourceOwner(resource: string): Promise<boolean> {
@@ -36,14 +36,16 @@ export class AuthProvider implements interfaces.AuthProvider {
     try {
       let user: User;
 
-      const token = req.headers.authorization.split(' ')[1];
+      if (req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1];
 
-      if (token) {
-        user = await this.authService.decode(token);
+        if (token) {
+          user = await this.authService.decode(token);
 
-        user = await this.userService.findById(user._id);
+          user = await this.userService.findById(user._id);
 
-        user.role = 'user';
+          user.role = 'user';
+        }
       }
 
       return new Principal(user);
