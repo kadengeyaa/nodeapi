@@ -3,15 +3,16 @@ import { AuthService } from '../service/auth';
 import { UserEventEmitter } from '../event';
 import { UserService } from '../service/user';
 import { AccessControlService, AccessInfoService } from '../service/access';
+import { AuthMiddleware } from '../api/middleware/auth';
 
-const _container = new Container();
+export function getContainer(): Container {
+  const container = new Container();
+  container.bind<AuthService>(AuthService).to(AuthService);
+  container.bind<UserEventEmitter>(UserEventEmitter).to(UserEventEmitter);
+  container.bind<UserService>(UserService).to(UserService);
+  container.bind<AccessInfoService>(AccessInfoService).to(AccessInfoService);
+  container.bind<AccessControlService>(AccessControlService).to(AccessControlService);
+  container.bind<AuthMiddleware>(AuthMiddleware).to(AuthMiddleware);
 
-export function initDI(): void {
-  _container.bind<AuthService>(AuthService).to(AuthService);
-  _container.bind<UserEventEmitter>(UserEventEmitter).to(UserEventEmitter);
-  _container.bind<UserService>(UserService).to(UserService);
-  _container.bind<AccessInfoService>(AccessInfoService).to(AccessInfoService);
-  _container.bind<AccessControlService>(AccessControlService).to(AccessControlService);
+  return container;
 }
-
-export const container = _container;
