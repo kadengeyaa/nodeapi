@@ -1,9 +1,15 @@
 import 'reflect-metadata';
 import './config';
-import express from 'express';
+import './api/controller';
 import http from 'http';
-import { logger, load } from './loader';
 import { SERVER_PORT } from './config/server';
+import { InversifyExpressServer, getRouteInfo } from 'inversify-express-utils';
+import { configExpressError, configExpress, configExpressNotFoundError } from './loader/express';
+import { initDb } from './loader/mongoose';
+import { getContainer } from './loader/inversify';
+import { logger } from './loader/logger';
+import { render } from 'prettyjson';
+import { AuthProvider } from './api/provider/auth';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error('UNCAUGHT_EXCEPTION: %o', error);
@@ -17,9 +23,25 @@ process.on('unhandledRejection', (reason: {} | null | undefined, promise: Promis
 });
 
 async function serve(): Promise<void> {
-  const app = express();
+  await initDb();
 
-  await load(app);
+  logger.info('DB_CONNECTED');
+
+  const container = getContainer();
+
+  const app = new InversifyExpressServer(container, null, null, null, AuthProvider).setConfig(configExpress).build();
+
+  configExpressNotFoundError(app);
+
+  configExpressError(app);
+
+  logger.info('DI_LOADED');
+
+  logger.info('ROUTES_LOADED');
+
+  logger.debug(render(getRouteInfo(container)));
+
+  logger.info('APP_LOADED');
 
   const server = http.createServer(app);
 
