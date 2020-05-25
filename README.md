@@ -63,7 +63,9 @@ Make changes to package.json scripts and hooks
 Add .env file
 
 ```
+SERVER_PORT=?
 PORT=?
+NODE_ENV=?
 MONGO_DB_URI=?
 JWT_SECRET=?
 LOG_LEVEL=?
