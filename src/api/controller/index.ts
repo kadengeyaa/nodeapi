@@ -1,3 +1,3 @@
-import './status';
+import './system';
 import './auth';
 import './user';

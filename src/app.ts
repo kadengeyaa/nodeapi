@@ -10,6 +10,7 @@ import { getContainer } from './loader/inversify';
 import { logger } from './loader/logger';
 import { render } from 'prettyjson';
 import { AuthProvider } from './api/provider/auth';
+import { AddressInfo } from 'net';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error('UNCAUGHT_EXCEPTION: %o', error);
@@ -17,7 +18,7 @@ process.on('uncaughtException', (error: Error) => {
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason: {} | null | undefined, promise: Promise<any>) => {
+process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
   logger.error('UNHANDLED_REJECTION: Reason: %o', reason);
   logger.error('UNHANDLED_REJECTION: Promise: %o', promise);
 });
@@ -45,14 +46,14 @@ async function serve(): Promise<void> {
 
   const server = http.createServer(app);
 
-  server.on('error', error => {
+  server.on('error', (error) => {
     logger.error('SERVER_ERROR: %o', error);
 
     throw error;
   });
 
   server.listen(SERVER_PORT, () => {
-    logger.info('SERVER_STARTED: %o', server.address());
+    logger.info('SERVER_STARTED: port: %o', (server.address() as AddressInfo).port);
   });
 }
 
