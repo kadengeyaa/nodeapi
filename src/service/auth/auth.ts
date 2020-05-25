@@ -5,7 +5,7 @@ import argon2 from 'argon2';
 import { UserEventEmitter } from '../../event/user/user';
 import { ObjectID } from 'mongodb';
 import { User, UserDocument, UserModel } from '../../model/user/user';
-import { PROJECT_OTP_LENGTH, PROJECT_NAME, PROJECT_OTP_EXPIRY } from '../../config/project';
+import { PROJECT_OTP_LENGTH, PROJECT_NAME, PROJECT_OTP_EXPIRY, PROJECT_OTP_CHARACTER_SET } from '../../config/project';
 import { pickBy } from 'lodash';
 import { SmsNotificationEventEmitter } from '../../event/notification/smsNotification';
 
@@ -57,7 +57,7 @@ export class AuthService {
     let token: string;
 
     if (verify) {
-      const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
+      const code = generate({ length: PROJECT_OTP_LENGTH, charset: PROJECT_OTP_CHARACTER_SET });
 
       this.smsNotificationEventEmitter.emit('send-sms', {
         purpose: 'register',
@@ -129,7 +129,7 @@ export class AuthService {
     const { phoneNumber } = user;
 
     if (verify) {
-      const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
+      const code = generate({ length: PROJECT_OTP_LENGTH, charset: PROJECT_OTP_CHARACTER_SET });
 
       this.smsNotificationEventEmitter.emit('send-sms', {
         purpose: 'login',
@@ -224,7 +224,7 @@ export class AuthService {
     const { phoneNumber } = user;
 
     if (verify) {
-      const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
+      const code = generate({ length: PROJECT_OTP_LENGTH, charset: PROJECT_OTP_CHARACTER_SET });
 
       this.smsNotificationEventEmitter.emit('send-sms', {
         purpose: 'password-change',

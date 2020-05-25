@@ -64,9 +64,17 @@ Add .env file
 
 ```
 SERVER_PORT=?
-PORT=?
 NODE_ENV=?
-MONGO_DB_URI=?
 JWT_SECRET=?
-LOG_LEVEL=?
+JWT_EXPIRY=? // '1d' '1m' etc
+LOG_LEVEL=? // 'debug'
+MONGO_DB_URI=? // eg 'mongodb://localhost:27017/test-db'
+FILE_PATH=? // file upload path eg '../.nodeapi_files'
+AFRICASTALKING_API_KEY=? // SMS Getway Config, You can replace this with other sms getways eg twilio
+AFRICASTALKING_USERNAME=?  // SMS Getway Config, You can replace this with other sms getways eg twilio
+AFRICASTALKING_FROM=?  // SMS Getway Config, You can replace this with other sms getways eg twilio: NOTE: Remember to edit smsService implementation as well
+PROJECT_NAME=? // Name of the project, shown in SMS
+PROJECT_OTP_LENGTH=? // Length of OTP
+PROJECT_OTP_EXPIRY=? // Duration before OTP expires
+PROJECT_OTP_CHARACTER_SET=? // Characters used to generate OTP eg '0123456789abcdefghijklmnopqrstuvwxyz'
 ```
