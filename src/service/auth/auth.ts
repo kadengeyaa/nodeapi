@@ -1,6 +1,5 @@
 import { injectable, inject } from 'inversify';
 import { generate } from 'randomstring';
-import { SmsService } from '../sms/sms';
 import { TokenService } from '../token/token';
 import argon2 from 'argon2';
 import { UserEventEmitter } from '../../event/user/user';
@@ -8,6 +7,7 @@ import { ObjectID } from 'mongodb';
 import { User, UserDocument, UserModel } from '../../model/user/user';
 import { PROJECT_OTP_LENGTH, PROJECT_NAME, PROJECT_OTP_EXPIRY } from '../../config/project';
 import { pickBy } from 'lodash';
+import { SmsNotificationEventEmitter } from '../../event/notification/smsNotification';
 
 interface RegistrationInput {
   firstName: User['firstName'];
@@ -30,8 +30,8 @@ export class AuthService {
   @inject(UserEventEmitter)
   private userEventEmitter: UserEventEmitter;
 
-  @inject(SmsService)
-  private smsService: SmsService;
+  @inject(SmsNotificationEventEmitter)
+  private smsNotificationEventEmitter: SmsNotificationEventEmitter;
 
   @inject(TokenService)
   private tokenService: TokenService;
@@ -59,7 +59,11 @@ export class AuthService {
     if (verify) {
       const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
 
-      this.smsService.send({ to: phoneNumber, message: `${PROJECT_NAME}code is ${code}` });
+      this.smsNotificationEventEmitter.emit('send-sms', {
+        purpose: 'register',
+        to: phoneNumber,
+        message: `${PROJECT_NAME}code is ${code}`,
+      });
 
       token = this.tokenService.encode({ data, code, password }, { expiresIn: PROJECT_OTP_EXPIRY });
     } else {
@@ -127,7 +131,11 @@ export class AuthService {
     if (verify) {
       const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
 
-      this.smsService.send({ to: phoneNumber, message: `${PROJECT_NAME} code is ${code}` });
+      this.smsNotificationEventEmitter.emit('send-sms', {
+        purpose: 'login',
+        to: phoneNumber,
+        message: `${PROJECT_NAME} code is ${code}`,
+      });
 
       token = this.tokenService.encode({ data, code, password }, { expiresIn: PROJECT_OTP_EXPIRY });
     } else {
@@ -218,7 +226,11 @@ export class AuthService {
     if (verify) {
       const code = generate({ length: PROJECT_OTP_LENGTH, charset: '0123456789' });
 
-      this.smsService.send({ to: phoneNumber, message: `${PROJECT_OTP_LENGTH} code is ${code}` });
+      this.smsNotificationEventEmitter.emit('send-sms', {
+        purpose: 'password-change',
+        to: phoneNumber,
+        message: `${PROJECT_OTP_LENGTH} code is ${code}`,
+      });
 
       const token = this.tokenService.encode({ data, code, password }, { expiresIn: PROJECT_OTP_EXPIRY });
 

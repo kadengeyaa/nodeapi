@@ -5,7 +5,7 @@ import { NAME_REGEX, PASSWORD_REGEX, PHONE_NUMBER_REGEX, EMAIL_REGEX } from '../
 import { Auth2Middleware } from '../../middleware/auth';
 import { AuthService } from '../../../service/auth/auth';
 
-@controller('/v4/auth')
+@controller('/v1/auth')
 export class AuthController extends BaseHttpController {
   @inject(AuthService)
   private authService: AuthService;
