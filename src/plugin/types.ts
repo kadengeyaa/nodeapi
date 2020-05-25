@@ -31,3 +31,7 @@ export interface SearchableModel<T extends Document> extends Model<T> {
   look(q: string): Promise<T[]>;
   search(q: any, callback: any): Promise<T[]>;
 }
+
+export interface Query {
+  q?: string;
+}

@@ -1,13 +1,13 @@
 import { controller, httpGet, BaseHttpController, httpHead } from 'inversify-express-utils';
 
-@controller('/status')
+@controller('/v1/status')
 export class StatusController extends BaseHttpController {
   @httpGet('/')
-  get(): void {
+  async get(): Promise<void> {
     this.httpContext.response.status(200).end();
   }
   @httpHead('/')
-  head(): void {
+  async head(): Promise<void> {
     this.httpContext.response.status(200).end();
   }
 }

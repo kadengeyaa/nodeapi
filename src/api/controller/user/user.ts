@@ -1,24 +1,26 @@
 import { Request, Response } from 'express';
-import { UserService } from '../../service/user';
+import { UserService } from '../../../service/user/user';
 import { inject } from 'inversify';
 import { celebrate, Joi } from 'celebrate';
-import { NAME_REGEX, USERNAME_REGEX } from '../../model/user';
 import { httpPut, controller, BaseHttpController } from 'inversify-express-utils';
-import { AuthMiddleware } from '../middleware/auth';
+import { Auth0Middleware } from '../../middleware/auth';
+import { NAME_REGEX, USERNAME_REGEX, EMAIL_REGEX } from '../../../util/regex';
 
-@controller('/v1/account', AuthMiddleware)
+@controller('/v1/user', Auth0Middleware)
 export class UserController extends BaseHttpController {
   @inject(UserService)
   private userService: UserService;
 
   @httpPut(
-    '/user',
+    '/',
     celebrate({
       body: Joi.object({
         userId: Joi.string().required(),
         firstName: Joi.string().regex(NAME_REGEX),
         lastName: Joi.string().regex(NAME_REGEX),
         username: Joi.string().regex(USERNAME_REGEX),
+        email: Joi.string().regex(EMAIL_REGEX),
+        phoneNumber: Joi.string().regex(EMAIL_REGEX),
       }),
     }),
   )
