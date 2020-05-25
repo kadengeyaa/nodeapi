@@ -69,12 +69,12 @@ JWT_SECRET=?
 JWT_EXPIRY=? // '1d' '1m' etc
 LOG_LEVEL=? // 'debug'
 MONGO_DB_URI=? // eg 'mongodb://localhost:27017/test-db'
-FILE_PATH=? // file upload path eg '../.nodeapi_files'
+FILE_PATH=? // file upload folder eg '../.nodeapi_files', either add this folder to gitignore to avoid commit the folder or set the folder outside the project folder
 AFRICASTALKING_API_KEY=? // SMS Getway Config, You can replace this with other sms getways eg twilio
 AFRICASTALKING_USERNAME=?  // SMS Getway Config, You can replace this with other sms getways eg twilio
 AFRICASTALKING_FROM=?  // SMS Getway Config, You can replace this with other sms getways eg twilio: NOTE: Remember to edit smsService implementation as well
 PROJECT_NAME=? // Name of the project, shown in SMS
 PROJECT_OTP_LENGTH=? // Length of OTP
 PROJECT_OTP_EXPIRY=? // Duration before OTP expires
-PROJECT_OTP_CHARACTER_SET=? // Characters used to generate OTP eg '0123456789abcdefghijklmnopqrstuvwxyz'
+PROJECT_OTP_CHARACTER_SET=? // Characters used to generate OTP eg '0123456789abcdefghijklmnopqrstuvwxyz', NOTE: To prevent bruteforce use alphanumeric PROJECT_OTP_CHARACTER_SET, short PROJECT_OPT_EXPIRY and long PROJECT_OTP_LENGTH
 ```
