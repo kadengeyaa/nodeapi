@@ -6,7 +6,7 @@ import { AccessControlService, AccessInfoService } from '../service/access';
 import { AuthMiddleware } from '../api/middleware/auth';
 
 export function getContainer(): Container {
-  const container = new Container();
+  const container = new Container({ skipBaseClassChecks: true });
   container.bind<AuthService>(AuthService).to(AuthService);
   container.bind<UserEventEmitter>(UserEventEmitter).to(UserEventEmitter);
   container.bind<UserService>(UserService).to(UserService);
