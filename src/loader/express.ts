@@ -4,15 +4,23 @@ import morganBody from 'morgan-body';
 import { serializeError, ErrorObject } from 'serialize-error';
 import { NODE_ENV } from '../config/server';
 import { isCelebrate } from 'celebrate';
+import cors from 'cors';
 
 export function configExpress(app: Application): void {
   app.enable('trust proxy');
 
-  app.use(bodyParser.json());
+  app.use(
+    cors({
+      allowedHeaders: ['Authorization', 'Content-Type'],
+      exposedHeaders: ['Authorization'],
+    }),
+  );
+
+  app.use(bodyParser.json({ limit: '10mb' }));
 
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  morganBody(app);
+  morganBody(app, { maxBodyLength: 100 });
 }
 
 export function configExpressNotFoundError(app: Application): void {
