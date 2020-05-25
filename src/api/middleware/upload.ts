@@ -6,7 +6,7 @@ import { extname } from 'path';
 import { sync } from 'mkdirp';
 
 @injectable()
-export class UploadMiddleware extends BaseMiddleware {
+export class UploadCheckerMiddleware extends BaseMiddleware {
   async handler(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { file } = req;
