@@ -62,7 +62,7 @@ export class AuthService {
       this.smsNotificationEventEmitter.emit('send-sms', {
         purpose: 'register',
         to: phoneNumber,
-        message: `${PROJECT_NAME}code is ${code}`,
+        message: `${PROJECT_NAME} code is ${code}`,
       });
 
       token = this.tokenService.encode({ data, code, password }, { expiresIn: PROJECT_OTP_EXPIRY });
@@ -229,7 +229,7 @@ export class AuthService {
       this.smsNotificationEventEmitter.emit('send-sms', {
         purpose: 'password-change',
         to: phoneNumber,
-        message: `${PROJECT_OTP_LENGTH} code is ${code}`,
+        message: `${PROJECT_NAME} code is ${code}`,
       });
 
       const token = this.tokenService.encode({ data, code, password }, { expiresIn: PROJECT_OTP_EXPIRY });

@@ -5,6 +5,7 @@ import { celebrate, Joi } from 'celebrate';
 import { httpPut, controller, BaseHttpController } from 'inversify-express-utils';
 import { Auth0Middleware } from '../../middleware/auth';
 import { NAME_REGEX, USERNAME_REGEX, EMAIL_REGEX } from '../../../util/regex';
+import { PermitDefaultMiddleware } from '../../middleware/permission';
 
 @controller('/v1/user', Auth0Middleware)
 export class UserController extends BaseHttpController {
@@ -13,6 +14,7 @@ export class UserController extends BaseHttpController {
 
   @httpPut(
     '/',
+    PermitDefaultMiddleware,
     celebrate({
       body: Joi.object({
         userId: Joi.string().required(),

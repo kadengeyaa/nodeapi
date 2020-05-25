@@ -59,7 +59,7 @@ function plugin(schema: Schema): void {
   });
 
   schema.post('findOneAndUpdate', async function (document) {
-    await archive('update', document);
+    if (document) await archive('update', document);
   });
 }
 
