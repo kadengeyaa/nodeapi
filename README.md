@@ -78,3 +78,29 @@ PROJECT_OTP_LENGTH=? // Length of OTP
 PROJECT_OTP_EXPIRY=? // Duration before OTP expires
 PROJECT_OTP_CHARACTER_SET=? // Characters used to generate OTP eg '0123456789abcdefghijklmnopqrstuvwxyz', NOTE: To prevent bruteforce use alphanumeric PROJECT_OTP_CHARACTER_SET, short PROJECT_OPT_EXPIRY and long PROJECT_OTP_LENGTH
 ```
+# PRODUCTION
+
+Add ecosystem.config.js file (Read more from PM2 documentation)
+
+```
+exports.apps = [
+  {
+    name: ?, // name of the process
+    script: './build/app.js',
+    instances: 'max',
+    exec_mode: 'cluster',
+    max_memory_restart: '4G',
+    node_args: '--max_old_space_size=4096',
+  },
+];
+```
+
+To start
+```
+yarn serve
+```
+
+To stop
+```
+yarn stop
+```

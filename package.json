@@ -1,6 +1,6 @@
 {
   "name": "node_api",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Base project for node api server",
   "main": "src/app.ts",
   "repository": "git@github.com:kadengeyaa/nodeapi.git",
@@ -9,8 +9,9 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "stop": "pm2 delete app",
-    "serve": "yarn stop ; pm2 start ./build/app.js && pm2 logs app",
+    "stop": "pm2 delete ecosystem.config.js",
+    "serve": "yarn stop; pm2 start ecosystem.config.js",
+    "sync": "yarn build && yarn serve",
     "start": "nodemon",
     "test": "jest",
     "lint": "eslint --ignore-path .eslintignore --ext .ts src/",
