@@ -57,7 +57,7 @@
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
     "mongoosastic": "^4.6.0",
     "mongoose": "^5.9.15",
